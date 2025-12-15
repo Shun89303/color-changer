@@ -1,8 +1,14 @@
-import {useColor} from './useColor';
+import {useContext} from 'react';
+import {ColorContext} from './ColorContext';
 import './App.css'
 
 function App() {
-  const [bgColor, btnColor, changeColors] = useColor();
+  const {bgColor, btnColor, setBgColor, setBtnColor} = useContext(ColorContext);
+
+  function handleClick() {
+    setBgColor('white');
+    setBtnColor('black');
+  }
 
   const conStyle = {
     position: 'absolute',
@@ -30,7 +36,7 @@ function App() {
 
   return (
     <div className='container' style={conStyle}>
-      <button style={butStyle} onClick={() => changeColors('white', 'black')}>
+      <button style={butStyle} onClick={handleClick}>
         Change color
         </button>
     </div>
