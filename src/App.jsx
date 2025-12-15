@@ -1,9 +1,8 @@
-import {useState, useEffect} from 'react';
+import {useColor} from './useColor';
 import './App.css'
 
 function App() {
-  const [bgColor, setColor] = useState('black');
-  const [butColor, setButColor] = useState('white');
+  const [bgColor, btnColor, changeColors] = useColor();
 
   const conStyle = {
     position: 'absolute',
@@ -17,7 +16,7 @@ function App() {
   }
 
   const butStyle = {
-    backgroundColor: butColor,
+    backgroundColor: btnColor,
     color: 'slategrey',
     position: 'absolute',
     transform: 'translate(-50%, -50%)',
@@ -29,25 +28,11 @@ function App() {
     cursor: 'pointer',
   }
 
-  function handleColorChange() {
-    setColor('white')
-    setButColor('black')
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setColor('black')
-      setButColor('white')
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div>
-      <div className='container' style={conStyle}>
-        <button style={butStyle} onClick={handleColorChange}>Change color</button>
-      </div>
+    <div className='container' style={conStyle}>
+      <button style={butStyle} onClick={() => changeColors('white', 'black')}>
+        Change color
+        </button>
     </div>
   )
 }
