@@ -3,11 +3,11 @@ import {ColorContext} from './ColorContext';
 import './App.css'
 
 function App() {
-  const {bgColor, btnColor, setBgColor, setBtnColor} = useContext(ColorContext);
+  const {bgColor, btnColor, dispatch} = useContext(ColorContext);
 
   function handleClick() {
-    setBgColor('white');
-    setBtnColor('black');
+    dispatch({ type: 'SET_BG', payload: 'white' });
+    dispatch({ type: 'SET_BTN', payload: 'black' });
   }
 
   const conStyle = {
@@ -38,7 +38,7 @@ function App() {
     <div className='container' style={conStyle}>
       <button style={butStyle} onClick={handleClick}>
         Change color
-        </button>
+      </button>
     </div>
   )
 }

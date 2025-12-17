@@ -1,21 +1,34 @@
-import {useState, useEffect} from 'react';
+import {useReducer, useEffect} from 'react';
 import { ColorContext } from './ColorContext';
 
+const initialState = { bgColor: 'black', btnColor: 'white' };
+
+function colorReducer(state, action) {
+  switch (action.type) {
+    case 'SET_BG':
+      return { ...state, bgColor: action.payload };
+    case 'SET_BTN':
+      return { ...state, btnColor: action.payload };
+    case 'RESET':
+      return { bgColor: 'black', btnColor: 'white' };
+    default:
+      return state;
+  }
+}
+
 export function ColorProvider({ children }) {
-  const [bgColor, setBgColor] = useState('black');
-  const [btnColor, setBtnColor] = useState('white');
+  const [state, dispatch] = useReducer(colorReducer, initialState);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setBgColor('black');
-      setBtnColor('white');
+      dispatch({ type: 'RESET' });
     }, 2000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <ColorContext.Provider value={{ bgColor, btnColor, setBgColor, setBtnColor }}>
+    <ColorContext.Provider value={{ ...state, dispatch }}>
       {children}
     </ColorContext.Provider>
   );
